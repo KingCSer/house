@@ -1,0 +1,74 @@
+#include <iostream>
+#include <io.h>
+#include <string>
+#include <fstream>
+#include <cstdlib>
+#include <cstdio>
+
+using namespace std;
+
+void dir(string path)
+{
+ long hFile = 0;
+ int i=0;
+ struct _finddata_t fileInfo;
+ string pathName, exdName;
+ // \\* 代表要遍历所有的类型
+ if ((hFile = _findfirst(pathName.assign(path).append("\\*").c_str(), &fileInfo)) == -1) {
+  return;
+ }
+ do
+ {
+  //判断文件的属性是文件夹还是文件
+  if(i>=2)
+  {
+  cout << fileInfo.name  << endl;
+  ifstream in(fileInfo.name);
+  string buffer;
+  ofstream out("test.txt");
+  int flag=0;
+  while(!in.eof())
+  {
+      getline(in,buffer);
+      if((buffer[0]=='D')||(buffer[0]=='C'&&buffer[1]=='y')||(buffer[0]=='P'))
+      {
+          continue;
+      }
+      else
+      {
+          flag=1;
+          out << buffer <<endl;
+      }
+  }
+  in.close();
+  out.close();
+  if(flag==0)
+    system("del fileInfo.name");
+  else
+  {
+      ifstream in1("test.txt");
+      ofstream out1(fileInfo.name);
+      while(!in1.eof())
+      {
+          getline(in1,buffer);
+          out1 << buffer <<endl;
+      }
+      in1.close();
+      out1.close();
+  }
+  system("del test.txt");
+  }
+  ++i;
+ } while (_findnext(hFile, &fileInfo) == 0);
+ _findclose(hFile);
+ return;
+}
+
+int main()
+{
+ //要遍历的目录
+ string path="D:\\demo1\\label_delete";
+ dir(path);
+ system("pause");
+ return 0;
+}
