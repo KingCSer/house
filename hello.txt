@@ -1,4 +1,7 @@
-hello,world!
-你好，世界！
-I like programming!
-I like C++!
+I like programming.
+I don't like programming.
+I like git.
+I love git.
+I lllll.
+I IIIIII.
+IIIIIIIIIIII.
